@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs, { writeFile } from 'fs';
 import { readFile } from 'fs/promises';
 
