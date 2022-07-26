@@ -20,7 +20,7 @@
 // });
 
 import http from "http";
-import fs from "fs/promises";
+import fs from "fs" //fs/promises";
 import { stringify } from "querystring";
 
 const petRegExp = /^\/pets\/(.*)$/; 
