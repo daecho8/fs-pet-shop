@@ -8,10 +8,7 @@ const PORT = 3000;
 app.use(express.json());
 
 const pool = new pg.Pool({
-    database: 'petshop',
-    username: 'dbuser',
-    password: 'secretpassword',
-
+    database: 'petshop'
 });
     
 app.get("/pets", (req, res) => {
@@ -77,40 +74,8 @@ app.delete("/pets/:id", (req, res) => {
 });
 
 app.use((err, req, res, next)=> {
-    // pool.end();
     res.sendStatus(500);
 });
-
-// app.use(basicAuth({
-//     users: {
-//         'admin': 'dbuser',
-//         'adam': 'secretpassword',
-//         'eve': 'asdfghjkl',
-//     }
-// }))
-
-app.use(basicAuth({
-    authorizer: myAsyncAuthorizer,
-    authorizeAsync: true,
-}))
-
-function myAsyncAuthorizer(username, password, cb) {
-    if (username.startsWith('A') & password.startsWith('secret'))
-        return cb(null, true)
-    else
-        return cb(null, false)
-}
-
-app.use(basicAuth({
-    users: { 'Foo': 'bar' },
-    unauthorizedResponse: getUnauthorizedResponse
-}))
-
-function getUnauthorizedResponse(req) {
-    return req.auth
-        ? ('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected')
-        : 'No credentials provided'
-}
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);
